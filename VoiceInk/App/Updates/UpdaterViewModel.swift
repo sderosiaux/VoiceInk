@@ -32,7 +32,14 @@ final class UpdaterViewModel: NSObject, ObservableObject, SPUUpdaterDelegate {
     override init() {
         let defaults = UserDefaults.standard
         self.defaults = defaults
-        checksForUpdatesWhenDashboardAppears = Self.initialAutomaticCheckPreference(in: defaults)
+        #if LOCAL_BUILD
+            // Local builds are unsigned forks; the official appcast would replace them with the upstream binary.
+            checksForUpdatesWhenDashboardAppears = false
+            super.init()
+            return
+        #else
+            checksForUpdatesWhenDashboardAppears = Self.initialAutomaticCheckPreference(in: defaults)
+        #endif
         super.init()
 
         let updater = updaterController.updater
@@ -49,6 +56,9 @@ final class UpdaterViewModel: NSObject, ObservableObject, SPUUpdaterDelegate {
     }
 
     func setChecksForUpdatesWhenDashboardAppears(_ value: Bool) {
+        #if LOCAL_BUILD
+            return
+        #endif
         guard checksForUpdatesWhenDashboardAppears != value else { return }
 
         checksForUpdatesWhenDashboardAppears = value
@@ -76,6 +86,9 @@ final class UpdaterViewModel: NSObject, ObservableObject, SPUUpdaterDelegate {
     }
 
     func checkForUpdates() {
+        #if LOCAL_BUILD
+            return
+        #endif
         guard canCheckForUpdates else { return }
 
         // Any explicit check is interaction with the currently advertised update.

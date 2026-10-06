@@ -53,7 +53,10 @@ final class ChangeLogManager: ObservableObject {
         defaults: UserDefaults = .standard,
         item: ChangeLogItem = ChangeLogCatalog.latest
     ) -> Bool {
-        defaults.bool(forKey: OnboardingSettings.completedV2Key)
+        #if LOCAL_BUILD
+            return false
+        #endif
+        return defaults.bool(forKey: OnboardingSettings.completedV2Key)
             && !(defaults.stringArray(forKey: DefaultsKey.dismissedItemIDs) ?? []).contains(item.id)
     }
 

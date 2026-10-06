@@ -240,6 +240,7 @@ struct SettingsView: View {
                 )
                 .disabled(launchAtLoginManager.isUpdating)
 
+                #if !LOCAL_BUILD
                 Toggle(
                     "Automatically Check for Updates",
                     isOn: Binding(
@@ -255,12 +256,15 @@ struct SettingsView: View {
                             AnnouncementsService.shared.stop()
                         }
                     }
+                #endif
 
                 HStack {
+                    #if !LOCAL_BUILD
                     Button("Check for Updates") {
                         updaterViewModel.checkForUpdates()
                     }
                     .disabled(!updaterViewModel.canCheckForUpdates)
+                    #endif
 
                     Button("Reset Onboarding") {
                         showResetOnboardingAlert = true

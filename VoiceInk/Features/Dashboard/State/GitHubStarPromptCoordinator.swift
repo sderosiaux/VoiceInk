@@ -148,6 +148,9 @@ final class GitHubStarPromptCoordinator: ObservableObject {
 
     // Once Later has been clicked, the toast retires for good; the persistent footer button takes over.
     private static var shouldShow: Bool {
+        #if LOCAL_BUILD
+            return false
+        #endif
         let defaults = UserDefaults.standard
         if defaults.bool(forKey: Keys.hasStarred) { return false }
         if defaults.bool(forKey: Keys.hasDeferredOnce) { return false }

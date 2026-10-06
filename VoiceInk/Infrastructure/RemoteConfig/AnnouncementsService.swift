@@ -22,6 +22,9 @@ final class AnnouncementsService {
     // MARK: - Public API
 
     func start() {
+        #if LOCAL_BUILD
+            return
+        #endif
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: refreshInterval, repeats: true) { [weak self] _ in
             self?.fetchAndMaybeShow()

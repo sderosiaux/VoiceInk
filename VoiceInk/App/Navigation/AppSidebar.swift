@@ -76,10 +76,15 @@ private extension ViewType {
         .audio,
     ]
 
-    static let secondaryItems: [ViewType] = [
-        .settings,
-        .license,
-    ]
+    #if LOCAL_BUILD
+        // Local builds are always licensed; the license screen has nothing to manage.
+        static let secondaryItems: [ViewType] = [.settings]
+    #else
+        static let secondaryItems: [ViewType] = [
+            .settings,
+            .license,
+        ]
+    #endif
 
     static func assertSidebarItemsCoverAllCases() {
         #if DEBUG
