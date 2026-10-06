@@ -9,7 +9,7 @@
 	<key>SUPublicEDKey</key>
 	<string>rLRdZIjK3gHKfqNlAF9nT7FbjwSvwkJ8BVn0v2mD1Mo=</string>
 	<key>LSUIElement</key>
-	<false/>
+	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
